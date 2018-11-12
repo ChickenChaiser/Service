@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#a5ca39</color>
+    <color name="colorPrimaryDark">#393c42</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorBackground">#393c42</color>
+    <color name="colorBar">#5e646d</color>
+    <color name="mdtp_accent_color">#5e646d</color>
+    <color name="mdtp_accent_color_dark">#a5ca39</color>
+    <color name="colorSecondary">#8baa31</color>
+
+</resources>

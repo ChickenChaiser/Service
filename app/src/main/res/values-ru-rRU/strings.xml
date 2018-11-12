@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Блаблабла</string>
+    <string name="title_activity_main">Беседки</string>
+    <string name="set_alarm_button">Установить</string>
+    <string name="cancel_alarm_button">Отмена</string>
+    <string name="week">П    В    С    Ч    П    С    В</string>
+    <string name="monday">П</string>
+    <string name="tuesday">В</string>
+    <string name="wednesday">С</string>
+    <string name="thursday">Ч</string>
+    <string name="friday">П</string>
+    <string name="saturday">С</string>
+    <string name="sunday">В</string>
+    <string name="name">Имя</string>
+    <string name="password">Пароль</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="have_an_account">Уже есть аккаунт?</string>
+    <string name="login">Войти</string>
+    <string name="doesn_t_have_an_account_register_now">Нету аккаунта? Зарегистрируй сейчас!</string>
+    <string name="new_chat">Новая беседа</string>
+</resources>
