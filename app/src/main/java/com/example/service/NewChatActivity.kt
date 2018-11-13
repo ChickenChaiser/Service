@@ -12,7 +12,10 @@ class NewChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_chat)
 
-
-
+        val adapter = GroupAdapter<ViewHolder>()
+        adapter.add(UserItem())
+        adapter.add(UserItem())
+        adapter.add(UserItem())
+        recyclerview_newchat_userslist.adapter = adapter
     }
 }
