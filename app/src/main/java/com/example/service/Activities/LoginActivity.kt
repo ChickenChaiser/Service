@@ -1,10 +1,11 @@
-package com.example.service
+package com.example.service.Activities
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.service.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -13,7 +14,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        val intentMainActivity = Intent(this,MainActivity::class.java)
+        val intentMainActivity = Intent(this, ChatroomsActivity::class.java)
         login_button.setOnClickListener {
             val email = login_email.text.toString()
             val password = login_password.text.toString()
@@ -34,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
         }
-        val intentRegistrationActivity = Intent(this,RegistrationActivity::class.java)
+        val intentRegistrationActivity = Intent(this, RegistrationActivity::class.java)
         login_textview.setOnClickListener {
             startActivity(intentRegistrationActivity)
         }

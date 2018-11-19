@@ -1,15 +1,15 @@
-package com.example.service
+package com.example.service.Activities
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import com.example.service.R
+import com.example.service.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -56,7 +56,7 @@ class RegistrationActivity : AppCompatActivity() {
     private fun Register() {
         val password = register_password_edittext.text.toString()
         val email = register_email_edittext.text.toString()
-        val intentMainActivity = Intent(this, MainActivity::class.java)
+        val intentMainActivity = Intent(this, ChatroomsActivity::class.java)
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Enter Email or password or both", Toast.LENGTH_SHORT).show()
             return
@@ -65,7 +65,7 @@ class RegistrationActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if (!it.isSuccessful) return@addOnCompleteListener
-                    Log.d("RegistrationActivity", "Succesfully created new user: ${it.result!!.user.uid}")
+                    Log.d("latest", "Succesfully created new user: ${it.result!!.user.uid}")
                     uploadImageToFirebaseStorage()
                     intentMainActivity.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intentMainActivity)

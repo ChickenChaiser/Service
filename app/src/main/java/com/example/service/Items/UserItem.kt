@@ -1,11 +1,11 @@
-package com.example.service
+package com.example.service.Items
 
-import android.content.ClipData
-import android.support.v7.widget.RecyclerView
+import com.example.service.R
+import com.example.service.User
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
-import kotlinx.android.synthetic.main.user_row_new_chat.view.*
+import kotlinx.android.synthetic.main.user_row_new_chat_item.view.*
 
 class UserItem(val user: User) : Item<ViewHolder>() {
 
@@ -16,7 +16,7 @@ class UserItem(val user: User) : Item<ViewHolder>() {
     }
 
     override fun getLayout(): Int {
-        return R.layout.user_row_new_chat
+        return R.layout.user_row_new_chat_item
     }
 
 }

@@ -1,11 +1,14 @@
-package com.example.service
+package com.example.service.Activities
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.widget.LinearLayout
+import com.example.service.Items.UserItem
+import com.example.service.R
+import com.example.service.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -14,20 +17,18 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_new_chat.*
 
-class NewChatActivity : AppCompatActivity() {
+class StartNewChatActivity : AppCompatActivity() {
 
+    companion object {
+        val USER_KEY = "USER_KEY"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_chat)
+
         val rv = findViewById<RecyclerView>(R.id.recyclerview_newchat_userslist)
         rv.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        val users = ArrayList<User>()
-        //users.add(UserItem("kek"))
-        //users.add(UserItem("sds"))
-        //val customAdapter=CustomAdapter(users)
-        //val adapter = GroupAdapter<ViewHolder>()
-        //rv.adapter=customAdapter
 
         getUsers()
 
@@ -43,7 +44,14 @@ class NewChatActivity : AppCompatActivity() {
                     val user= it.getValue(User::class.java)
                     if (user!=null)
                     adapter.add(UserItem(user))
-                    Log.d("showing user","$it")
+                }
+                adapter.setOnItemClickListener { item, view ->
+                    val userItem=item as UserItem
+                    val intentChatActivity = Intent(view.context, ChatActivity::class.java)
+                    intentChatActivity.putExtra(USER_KEY,userItem.user)
+                    startActivity(intentChatActivity)
+
+                    finish()
                 }
                 recyclerview_newchat_userslist.adapter = adapter
             }

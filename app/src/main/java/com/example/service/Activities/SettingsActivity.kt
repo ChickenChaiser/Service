@@ -1,10 +1,8 @@
-package com.example.service
+package com.example.service.Activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.TimePicker
-import java.util.*
+import com.example.service.R
 
 class SettingsActivity : AppCompatActivity() {
 

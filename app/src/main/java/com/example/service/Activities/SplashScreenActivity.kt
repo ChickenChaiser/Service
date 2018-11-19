@@ -1,9 +1,9 @@
-package com.example.service
+package com.example.service.Activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
-import android.support.v4.content.ContextCompat.startActivity
+import com.example.service.R
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 import kotlin.concurrent.schedule
@@ -29,7 +29,7 @@ class SplashScreenActivity : AppCompatActivity() {
             finish()
         }
         else{
-            val intentMainActivity = Intent(this, MainActivity::class.java)
+            val intentMainActivity = Intent(this, ChatroomsActivity::class.java)
             startActivity(intentMainActivity)
             finish()}
     }

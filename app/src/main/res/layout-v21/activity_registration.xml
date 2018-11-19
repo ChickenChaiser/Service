@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationActivity"
-    android:background="@color/colorBackground">
+    tools:context=".Activities.RegistrationActivity">
 
     <EditText
         android:id="@+id/register_username_edittext"
