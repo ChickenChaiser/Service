@@ -46,10 +46,7 @@ class RegistrationActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
             avatarUri = data.data
-            //val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, avatarUri)
             register_select_image_imageview.setImageURI(avatarUri)
-            //val bitmapDrawable=BitmapDrawable(bitmap)
-            //register_select_image_button.setBackgroundDrawable(bitmapDrawable)
         }
     }
 

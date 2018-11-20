@@ -53,9 +53,8 @@ class ChatActivity : AppCompatActivity() {
         val currentId = FirebaseAuth.getInstance().uid
         val contactUser = intent.getParcelableExtra<User>(StartNewChatActivity.USER_KEY)
         val contactId = contactUser.uid
-        if (currentId == null || contactId == null) return
+        if (currentId == null) return
 
-        //val ref = FirebaseDatabase.getInstance().getReference("/messages").push()
         val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$currentId/$contactId").push()
         val contactRef = FirebaseDatabase.getInstance().getReference("/user-messages/$contactId/$currentId").push()
         val chatMessage = ChatMessage(ref.key!!, message, contactId, currentId, System.currentTimeMillis() / 1000)
@@ -65,12 +64,12 @@ class ChatActivity : AppCompatActivity() {
                     editText_write_message.text.clear()
                     recyclerview_chat.scrollToPosition(adapter.itemCount-1)
                 }
-
-        contactRef.setValue(chatMessage)
+        if(currentId!=contactId) {
+            contactRef.setValue(chatMessage)
+        }
     }
 
     fun showMessages() {
-        //val ref = FirebaseDatabase.getInstance().getReference("/messages")
         val currentId = FirebaseAuth.getInstance().uid
         val contactUser = intent.getParcelableExtra<User>(StartNewChatActivity.USER_KEY)
         val contactId = contactUser?.uid

@@ -2,7 +2,7 @@ package com.example.service.Activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,10 +14,12 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.view.*
+import java.util.*
 
 class ChatroomsActivity : AppCompatActivity() {
 
@@ -29,22 +31,16 @@ class ChatroomsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //setSupportActionBar(toolbar)
 
-        fetchCurrentUser()
-        /*val newChat = findViewById<Button>(R.id.fab)
-        newChat.setOnClickListener {
-            startActivity(Intent(this@ChatroomsActivity,ChatActivity::class.java))
-        }*/
+        getCurrentUser()
 
 
-        Picasso.get().load(currentUser?.avatarUrl).into(drawerlayout.user_avatar )
 
         fab_new_chat.setOnClickListener {
             val intentNewChatActivity = Intent(this, StartNewChatActivity::class.java)
             startActivity(intentNewChatActivity)
         }
-        button2.setOnClickListener {
+        logOut_button.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             val intentLoginActivity =Intent(this, LoginActivity::class.java)
             intentLoginActivity.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -59,40 +55,26 @@ class ChatroomsActivity : AppCompatActivity() {
         mDrawer.setOnDrawerStateChangeListener(object : ElasticDrawer.OnDrawerStateChangeListener {
             override fun onDrawerStateChange(oldState: Int, newState: Int) {
                 if (newState == ElasticDrawer.STATE_CLOSED) {
-                    Log.i("ChatroomsActivity", "Drawer STATE_CLOSED")
+                    Log.i("ChatroomsActivityMsg", "Drawer STATE_CLOSED")
                 }
             }
 
             override fun onDrawerSlide(openRatio: Float, offsetPixels: Int) {
-                Log.i("ChatroomsActivity", "openRatio=$openRatio ,offsetPixels=$offsetPixels")
+                Log.i("ChatroomsActivityMsg", "openRatio=$openRatio ,offsetPixels=$offsetPixels")
             }
 
         })
-
-
-        /*val ref = FirebaseDatabase.getInstance().getReference("/users")
-        ref.addValueEventListener(object: ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                val user= p0.getValue(User::class.java)
-                Picasso.get().load(user?.avatarUrl).into(activity_main.user_avatar)
-            }
-
-        })*/
-
     }
 
-    private fun fetchCurrentUser(){
-        val  uid = FirebaseAuth.getInstance().uid
+    private fun getCurrentUser(){
+        val uid = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
         ref.addListenerForSingleValueEvent(object: ValueEventListener{
 
             override fun onDataChange(p0: DataSnapshot) {
                 currentUser=p0.getValue(User::class.java)
-//                Log.d("LatestMessages","Current user is ${currentUser!!.userName}")
+
+                Picasso.get().load(currentUser?.avatarUrl).into(drawerlayout.user_avatar )
             }
             override fun onCancelled(p0: DatabaseError) {
 
@@ -100,5 +82,22 @@ class ChatroomsActivity : AppCompatActivity() {
         })
     }
 
+    /*private fun changeAvatarInFirebaseStorage() {
+        if (avatarUri == null) return
+        val filename = UUID.randomUUID().toString()
+        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+        ref.putFile(avatarUri!!)
+                .addOnSuccessListener {
+                    Log.d("ChatroomsActivityMsg", "Successfully uploaded: ${it.metadata?.path}")
+
+                    ref.downloadUrl.addOnSuccessListener {
+                        Log.d("ChatroomsActivityMsg", "File location $it")
+                        saveUserToFirebaseDatabase(it.toString())
+                    }
+                }
+                .addOnFailureListener {
+                    Log.d("ChatroomsActivityMsg", "Failed to uplad image")
+                }
+    }*/
 
 }

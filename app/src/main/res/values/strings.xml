@@ -10,4 +10,6 @@
     <string name="login">Login</string>
     <string name="doesn_t_have_an_account_register_now">Doesn\'t have an account? Register now!</string>
     <string name="new_chat">New chat</string>
+    <string name="log_out">Log out</string>
+    <string name="write_message">Write message</string>
 </resources>

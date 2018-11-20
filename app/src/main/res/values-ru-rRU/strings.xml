@@ -8,4 +8,6 @@
     <string name="login">Войти</string>
     <string name="doesn_t_have_an_account_register_now">Нету аккаунта? Зарегистрируй сейчас!</string>
     <string name="new_chat">Новая беседа</string>
+    <string name="log_out">Выйти</string>
+    <string name="write_message">Введите сообщение</string>
 </resources>
