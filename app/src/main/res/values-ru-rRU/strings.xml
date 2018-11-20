@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Блаблабла</string>
-    <string name="title_activity_main">Беседки</string>
+    <string name="title_activity_main">Диалоги</string>
     <string name="name">Имя</string>
     <string name="password">Пароль</string>
     <string name="register">Зарегистрироваться</string>
     <string name="have_an_account">Уже есть аккаунт?</string>
     <string name="login">Войти</string>
     <string name="doesn_t_have_an_account_register_now">Нету аккаунта? Зарегистрируй сейчас!</string>
-    <string name="new_chat">Новая беседа</string>
+    <string name="new_chat">Новый диалог</string>
     <string name="log_out">Выйти</string>
     <string name="write_message">Введите сообщение</string>
 </resources>

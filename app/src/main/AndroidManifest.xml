@@ -15,7 +15,7 @@
         android:roundIcon="@drawable/androidchat_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:windowSoftInputMode="stateVisible|adjustResize"
+        android:windowSoftInputMode="stateHidden|adjustResize"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
             android:name=".Activities.SplashScreenActivity"
@@ -42,7 +42,8 @@
         <activity android:name=".Activities.SettingsActivity"
             android:theme="@style/AppTheme"/>
         <activity android:name=".Activities.ChatActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.ChatroomsActivity"/>
