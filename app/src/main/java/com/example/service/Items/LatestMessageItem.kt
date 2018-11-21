@@ -42,14 +42,16 @@ class LatestMessageItem(val chatMessage: ChatMessage): Item<ViewHolder>() {
         })
         val lastSenderRef = FirebaseDatabase.getInstance().getReference("/users/$lastSenderId")
 
-        lastSenderRef.addListenerForSingleValueEvent(object :ValueEventListener{
+        lastSenderRef.addValueEventListener(object :ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
 
             }
 
             override fun onDataChange(p0: DataSnapshot) {
                 val user = p0.getValue(User::class.java)
-                viewHolder.itemView.textView_latest_message.text=user?.userName+": "+chatMessage.text
+                Picasso.get().load(user?.avatarUrl).into(viewHolder.itemView.lastSenderAvatar_circleimageview)
+
+                viewHolder.itemView.textView_latest_message.text=chatMessage.text
             }
 
         })

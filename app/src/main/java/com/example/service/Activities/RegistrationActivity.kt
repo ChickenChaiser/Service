@@ -6,14 +6,22 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.support.annotation.NonNull
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import com.example.service.R
+import com.example.service.R.drawable.camera150
+import com.example.service.R.id.register_username_edittext
 import com.example.service.User
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_registration.*
+import java.net.URL
 import java.util.*
 
 class RegistrationActivity : AppCompatActivity() {
@@ -75,21 +83,26 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     private fun uploadImageToFirebaseStorage() {
-        if (avatarUri == null) return
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        ref.putFile(avatarUri!!)
-                .addOnSuccessListener {
-                    Log.d("RegistrationActivity", "Successfully uploaded: ${it.metadata?.path}")
+        if (avatarUri == null) {
+            val url="https://firebasestorage.googleapis.com/v0/b/service-1d160.appspot.com/o/images%2Fcamera150.png?alt=media&token=afc8ea8d-bdf9-4c33-a10b-6e469bcff6c2"
+            saveUserToFirebaseDatabase(url)
+        }else {
+            val filename = UUID.randomUUID().toString()
+            val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+            ref.putFile(avatarUri!!)
+                    .addOnSuccessListener {
+                        Log.d("RegistrationActivity", "Successfully uploaded: ${it.metadata?.path}")
 
-                    ref.downloadUrl.addOnSuccessListener {
-                        Log.d("RegistrationActivity", "File location $it")
-                        saveUserToFirebaseDatabase(it.toString())
+                        ref.downloadUrl.addOnSuccessListener {
+                            Log.d("RegistrationActivity", "File location $it")
+                            saveUserToFirebaseDatabase(it.toString())
+                        }
                     }
-                }
-                .addOnFailureListener {
-                    Log.d("RegistrationActivity", "Failed to uplad image")
-                }
+                    .addOnFailureListener {
+                        Log.d("RegistrationActivity", "Failed to uplad image")
+                    }
+        }
+
     }
 
     private fun saveUserToFirebaseDatabase(avatarUrl: String) {

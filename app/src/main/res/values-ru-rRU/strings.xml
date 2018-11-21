@@ -10,4 +10,10 @@
     <string name="new_chat">Новый диалог</string>
     <string name="log_out">Выйти</string>
     <string name="write_message">Введите сообщение</string>
+    <string name="save_changes">Сохранить изменения</string>
+    <string name="type_new_password">Введите новый пароль</string>
+    <string name="current_password">Текущий пароль</string>
+    <string name="userdata_update">Данные пользователя обновлены</string>
+    <string name="password_change_failed">Неверный пароль</string>
+
 </resources>

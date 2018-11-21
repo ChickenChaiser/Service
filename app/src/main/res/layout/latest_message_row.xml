@@ -39,10 +39,19 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        tools:text="LatestMessage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/lastSenderAvatar_circleimageview"
+        app:layout_constraintTop_toBottomOf="@+id/textView_contact_username"
+        tools:text="LatestMessage" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/lastSenderAvatar_circleimageview"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
         app:layout_constraintStart_toEndOf="@+id/useravatar_latestmessage_circleimageView"
         app:layout_constraintTop_toBottomOf="@+id/textView_contact_username" />
 </android.support.constraint.ConstraintLayout>

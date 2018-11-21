@@ -12,4 +12,9 @@
     <string name="new_chat">New dialog</string>
     <string name="log_out">Log out</string>
     <string name="write_message">Write message</string>
+    <string name="save_changes">Save changes</string>
+    <string name="type_new_password">Type new password</string>
+    <string name="current_password">Current password</string>
+    <string name="userdata_update">User data updated</string>
+    <string name="password_change_failed">Wrong password</string>
 </resources>
