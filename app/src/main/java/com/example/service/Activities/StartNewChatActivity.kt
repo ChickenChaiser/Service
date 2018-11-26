@@ -23,6 +23,8 @@ class StartNewChatActivity : AppCompatActivity() {
         val USER_KEY = "USER_KEY"
     }
 
+    var sortedUsers = ArrayList<User>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_chat)
@@ -35,7 +37,7 @@ class StartNewChatActivity : AppCompatActivity() {
     }
 
     fun getUsers(){
-        val ref = FirebaseDatabase.getInstance().getReference("/users")
+        val ref = FirebaseDatabase.getInstance().getReference("/users").orderByChild("userName")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -43,7 +45,12 @@ class StartNewChatActivity : AppCompatActivity() {
                 p0.children.forEach{
                     val user= it.getValue(User::class.java)
                     if (user!=null)
-                    adapter.add(UserItem(user))
+                    //adapter.add(UserItem(user))
+                        sortedUsers.add(user)
+                }
+                sortedUsers.sortBy { user -> user.userName.toUpperCase() }
+                sortedUsers.forEach {
+                    adapter.add(UserItem(it))
                 }
                 adapter.setOnItemClickListener { item, view ->
                     val userItem=item as UserItem
@@ -61,5 +68,24 @@ class StartNewChatActivity : AppCompatActivity() {
             }
 
         })
+     //   val adapter = GroupAdapter<ViewHolder>()
+        /*sortedUsers?.sortBy { user -> user.userName.toString().toUpperCase() }
+        sortedUsers?.forEach {
+            adapter.add(UserItem(it))
+        }*/
+        /*adapter.setOnItemClickListener { item, view ->
+            val userItem=item as UserItem
+            val intentChatActivity = Intent(view.context, ChatActivity::class.java)
+            intentChatActivity.putExtra(USER_KEY,userItem.user)
+            startActivity(intentChatActivity)
+
+            finish()
+        }
+        recyclerview_newchat_userslist.adapter = adapter*/
+                //.OrderBy(person => person.Age).ThenBy(person => person.Name).ToList()
+    }
+
+    private fun sortUsers(sortedUsers:ArrayList<User>){
+
     }
 }

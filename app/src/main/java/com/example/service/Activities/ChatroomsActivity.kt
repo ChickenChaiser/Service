@@ -107,17 +107,17 @@ class ChatroomsActivity : AppCompatActivity() {
                 Picasso.get().load(currentUser?.avatarUrl).into(drawerlayout.user_avatar)
             }
 
-            //region  Максимус
             override fun onCancelled(p0: DatabaseError) {
 
             }
-            //endregion
         })
     }
 
     private fun listenForLatestMesages() {
         val currentId = FirebaseAuth.getInstance().uid
-        val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$currentId")
+        //val contactUser = intent.getParcelableExtra<User>(StartNewChatActivity.USER_KEY)
+        //val contactId = contactUser.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$currentId").orderByChild("timestamp")
         ref.addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
@@ -150,7 +150,6 @@ class ChatroomsActivity : AppCompatActivity() {
         latestMessageMap.values.forEach {
             adapter.add(LatestMessageItem(it))
         }
-
     }
 
     /*private fun changeAvatarInFirebaseStorage() {

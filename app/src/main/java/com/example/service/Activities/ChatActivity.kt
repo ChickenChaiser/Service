@@ -18,6 +18,8 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_chat.*
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
+import java.sql.Date
+import java.util.*
 
 
 class ChatActivity : AppCompatActivity() {
@@ -51,7 +53,7 @@ class ChatActivity : AppCompatActivity() {
         val contactUser = intent.getParcelableExtra<User>(StartNewChatActivity.USER_KEY)
         val contactId = contactUser.uid
         if (currentId == null) return
-
+        val date= Date()
         val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$currentId/$contactId").push()
         val contactRef = FirebaseDatabase.getInstance().getReference("/user-messages/$contactId/$currentId").push()
         val chatMessage = ChatMessage(ref.key!!, message, contactId, currentId, System.currentTimeMillis() / 1000)
@@ -65,10 +67,10 @@ class ChatActivity : AppCompatActivity() {
 
 
         val latestMessageRef=FirebaseDatabase.getInstance().getReference("/latest-messages/$currentId/$contactId")
-        latestMessageRef.setValue(chatMessage)
+        latestMessageRef.setValue(chatMessage,0-date.getTime())
 
         val latestMessageContactRef=FirebaseDatabase.getInstance().getReference("/latest-messages/$contactId/$currentId")
-        latestMessageContactRef.setValue(chatMessage)
+        latestMessageContactRef.setValue(chatMessage,0-date.getTime())
     }
 
     fun showMessages() {
