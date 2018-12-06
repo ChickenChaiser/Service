@@ -44,7 +44,7 @@ class SettingsActivity : AppCompatActivity() {
             if (avatarUri != null)
                 uploadImageToFirebaseStorage()
 
-            val newUserName=editUsername_settings_editText.text.toString()
+            val newUserName = editUsername_settings_editText.text.toString()
             if (newUserName.isNotEmpty())
                 changeUserName(newUserName)
 
@@ -52,9 +52,9 @@ class SettingsActivity : AppCompatActivity() {
             val newPassword = newPassword_settings_editText.text.toString()
 
             if (currentPassword.isNotEmpty() || newPassword.isNotEmpty())
-                changeUserPassword(currentPassword,newPassword)
+                changeUserPassword(currentPassword, newPassword)
 
-            Toast.makeText(this,R.string.userdata_update, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.userdata_update, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -84,7 +84,7 @@ class SettingsActivity : AppCompatActivity() {
         })
     }
 
-    private fun changeUserName(newUserName:String) {
+    private fun changeUserName(newUserName: String) {
         val uid = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference().child("/users/$uid")
         ref.child("userName").setValue(newUserName)
@@ -96,7 +96,7 @@ class SettingsActivity : AppCompatActivity() {
         ref.child("avatarUrl").setValue(avatarUrl)
     }
 
-    private fun changeUserPassword(currentPassword:String, newPassword:String) {
+    private fun changeUserPassword(currentPassword: String, newPassword: String) {
         val user = FirebaseAuth.getInstance().currentUser
         val email = user?.email
         val credential = EmailAuthProvider
@@ -106,13 +106,13 @@ class SettingsActivity : AppCompatActivity() {
                     user!!.updatePassword(newPassword)
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this,R.string.password_change_failed,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.password_change_failed, Toast.LENGTH_SHORT).show()
                 }
 
 
     }
 
-    private fun uploadImageToFirebaseStorage(){
+    private fun uploadImageToFirebaseStorage() {
 
         val filename = UUID.randomUUID().toString()
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.annotation.NonNull
+import android.support.v4.app.FragmentActivity
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
@@ -23,6 +24,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_registration.*
 import java.net.URL
 import java.util.*
+import com.google.firebase.iid.FirebaseInstanceId
+
 
 class RegistrationActivity : AppCompatActivity() {
 
@@ -45,7 +48,7 @@ class RegistrationActivity : AppCompatActivity() {
         }
 
         register_select_image_imageview.setOnClickListener {
-            val intentPic = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            val intentPic = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(intentPic, 0)
         }
     }
@@ -84,9 +87,9 @@ class RegistrationActivity : AppCompatActivity() {
 
     private fun uploadImageToFirebaseStorage() {
         if (avatarUri == null) {
-            val url="https://firebasestorage.googleapis.com/v0/b/service-1d160.appspot.com/o/images%2Fcamera150.png?alt=media&token=afc8ea8d-bdf9-4c33-a10b-6e469bcff6c2"
+            val url = "https://firebasestorage.googleapis.com/v0/b/service-1d160.appspot.com/o/images%2Fcamera150.png?alt=media&token=afc8ea8d-bdf9-4c33-a10b-6e469bcff6c2"
             saveUserToFirebaseDatabase(url)
-        }else {
+        } else {
             val filename = UUID.randomUUID().toString()
             val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
             ref.putFile(avatarUri!!)
@@ -110,10 +113,10 @@ class RegistrationActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
         val user = User(uid, avatarUrl, register_username_edittext.text.toString())
 
+
         ref.setValue(user)
                 .addOnSuccessListener {
                     Log.d("RegistrationActivity", "User added to database")
                 }
     }
-
 }

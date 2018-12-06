@@ -18,20 +18,20 @@ class LoginActivity : AppCompatActivity() {
         login_button.setOnClickListener {
             val email = login_email.text.toString()
             val password = login_password.text.toString()
-            if (email.isEmpty()||password.isEmpty()){
-                Toast.makeText(this,"Enter Email or password or both",Toast.LENGTH_SHORT).show()
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Enter Email or password or both", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener {
-                        if(!it.isSuccessful) return@addOnCompleteListener
-                        Log.d("LoginActivity","Login successfull")
+                        if (!it.isSuccessful) return@addOnCompleteListener
+                        Log.d("LoginActivity", "Login successfull")
                         intentMainActivity.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intentMainActivity)
                     }
                     .addOnFailureListener {
-                        Log.d("LoginActivity","Login failed")
-                        Toast.makeText(this,"Failed to login: ${it.message}", Toast.LENGTH_SHORT).show()
+                        Log.d("LoginActivity", "Login failed")
+                        Toast.makeText(this, "Failed to login: ${it.message}", Toast.LENGTH_SHORT).show()
                     }
 
         }

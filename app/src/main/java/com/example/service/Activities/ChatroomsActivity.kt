@@ -1,20 +1,22 @@
 package com.example.service.Activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.example.service.ChatMessage
 import com.example.service.Items.LatestMessageItem
-import com.example.service.Items.UserItem
 import com.example.service.R
 import com.example.service.User
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +27,6 @@ import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.activity_settings.*
 import kotlin.collections.HashMap
 
 class ChatroomsActivity : AppCompatActivity() {
@@ -43,6 +44,10 @@ class ChatroomsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         getCurrentUser()
+
+        val actionBar = getSupportActionBar()
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp)
 
         val rv = findViewById<RecyclerView>(R.id.recyclerview_latest_messages)
         rv.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
@@ -96,6 +101,19 @@ class ChatroomsActivity : AppCompatActivity() {
         }
     }
 
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.activity_main_drawer,menu)
+        return super.onCreateOptionsMenu(menu)
+    }*/
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        var mDrawer = findViewById<View>(R.id.drawerlayout) as FlowingDrawer
+        if (mDrawer.drawerState == ElasticDrawer.STATE_CLOSED)
+            mDrawer.openMenu()
+        else mDrawer.closeMenu()
+        return true
+    }
+
     private fun getCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
@@ -115,9 +133,9 @@ class ChatroomsActivity : AppCompatActivity() {
 
     private fun listenForLatestMesages() {
         val currentId = FirebaseAuth.getInstance().uid
-        //val contactUser = intent.getParcelableExtra<User>(StartNewChatActivity.USER_KEY)
+        val contactUser = intent.getParcelableExtra<User>(StartNewChatActivity.USER_KEY)
         //val contactId = contactUser.uid
-        val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$currentId").orderByChild("timestamp")
+        val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$currentId").orderByChild("/$contactUser/timestamp")
         ref.addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
@@ -151,23 +169,5 @@ class ChatroomsActivity : AppCompatActivity() {
             adapter.add(LatestMessageItem(it))
         }
     }
-
-    /*private fun changeAvatarInFirebaseStorage() {
-        if (avatarUri == null) return
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        ref.putFile(avatarUri!!)
-                .addOnSuccessListener {
-                    Log.d("ChatroomsActivityMsg", "Successfully uploaded: ${it.metadata?.path}")
-
-                    ref.downloadUrl.addOnSuccessListener {
-                        Log.d("ChatroomsActivityMsg", "File location $it")
-                        saveUserToFirebaseDatabase(it.toString())
-                    }
-                }
-                .addOnFailureListener {
-                    Log.d("ChatroomsActivityMsg", "Failed to uplad image")
-                }
-    }*/
 
 }

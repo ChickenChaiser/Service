@@ -10,8 +10,8 @@ import kotlinx.android.synthetic.main.user_row_new_chat_item.view.*
 class UserItem(val user: User) : Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.user_row_userName.text=user.userName
-        Picasso.get().load(user.avatarUrl).into(viewHolder.itemView.user_row_circleimageView )
+        viewHolder.itemView.user_row_userName.text = user.userName
+        Picasso.get().load(user.avatarUrl).into(viewHolder.itemView.user_row_circleimageView)
     }
 
     override fun getLayout(): Int {

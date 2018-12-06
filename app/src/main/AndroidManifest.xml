@@ -17,6 +17,7 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateHidden|adjustResize"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
         <activity
             android:name=".Activities.SplashScreenActivity"
             android:theme="@style/SplashTheme"

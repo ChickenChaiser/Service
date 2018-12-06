@@ -7,7 +7,7 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.recieve_message_row.view.*
 
-class RecievedMessageItem (val user: User, val text:String): Item<ViewHolder>(){
+class RecievedMessageItem(val user: User, val text: String) : Item<ViewHolder>() {
     override fun getLayout(): Int {
         return R.layout.recieve_message_row
     }

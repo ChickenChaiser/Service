@@ -27,11 +27,11 @@ class SplashScreenActivity : AppCompatActivity() {
             intentLoginActivity.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intentLoginActivity)
             finish()
-        }
-        else{
+        } else {
             val intentMainActivity = Intent(this, ChatroomsActivity::class.java)
             startActivity(intentMainActivity)
-            finish()}
+            finish()
+        }
     }
 }
 

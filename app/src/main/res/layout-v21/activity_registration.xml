@@ -70,21 +70,6 @@
         app:layout_constraintTop_toBottomOf="@+id/registerButton"
         android:textColor="@color/colorPrimary"/>
 
-    <!--<Button
-        android:id="@+id/register_select_image_button"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/rounded_select_photo_button"
-        android:text="@string/select_avatar"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />-->
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/register_select_image_imageview"

@@ -36,16 +36,15 @@ class StartNewChatActivity : AppCompatActivity() {
 
     }
 
-    fun getUsers(){
+    fun getUsers() {
         val ref = FirebaseDatabase.getInstance().getReference("/users").orderByChild("userName")
-        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(p0: DataSnapshot) {
                 val adapter = GroupAdapter<ViewHolder>()
-                p0.children.forEach{
-                    val user= it.getValue(User::class.java)
-                    if (user!=null)
-                    //adapter.add(UserItem(user))
+                p0.children.forEach {
+                    val user = it.getValue(User::class.java)
+                    if (user != null && user.uid != ChatroomsActivity.currentUser?.uid)
                         sortedUsers.add(user)
                 }
                 sortedUsers.sortBy { user -> user.userName.toUpperCase() }
@@ -53,9 +52,9 @@ class StartNewChatActivity : AppCompatActivity() {
                     adapter.add(UserItem(it))
                 }
                 adapter.setOnItemClickListener { item, view ->
-                    val userItem=item as UserItem
+                    val userItem = item as UserItem
                     val intentChatActivity = Intent(view.context, ChatActivity::class.java)
-                    intentChatActivity.putExtra(USER_KEY,userItem.user)
+                    intentChatActivity.putExtra(USER_KEY, userItem.user)
                     startActivity(intentChatActivity)
 
                     finish()
@@ -68,24 +67,5 @@ class StartNewChatActivity : AppCompatActivity() {
             }
 
         })
-     //   val adapter = GroupAdapter<ViewHolder>()
-        /*sortedUsers?.sortBy { user -> user.userName.toString().toUpperCase() }
-        sortedUsers?.forEach {
-            adapter.add(UserItem(it))
-        }*/
-        /*adapter.setOnItemClickListener { item, view ->
-            val userItem=item as UserItem
-            val intentChatActivity = Intent(view.context, ChatActivity::class.java)
-            intentChatActivity.putExtra(USER_KEY,userItem.user)
-            startActivity(intentChatActivity)
-
-            finish()
-        }
-        recyclerview_newchat_userslist.adapter = adapter*/
-                //.OrderBy(person => person.Age).ThenBy(person => person.Name).ToList()
-    }
-
-    private fun sortUsers(sortedUsers:ArrayList<User>){
-
     }
 }
