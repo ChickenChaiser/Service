@@ -4,10 +4,7 @@ import com.example.service.ChatMessage
 import com.example.service.R
 import com.example.service.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -22,12 +19,14 @@ class LatestMessageItem(val chatMessage: ChatMessage) : Item<ViewHolder>() {
     }
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        val lastSenderId: String
-        if (chatMessage.currentId == FirebaseAuth.getInstance().uid)
-            lastSenderId = chatMessage.currentId
-        else
-            lastSenderId = chatMessage.contactId
-        val contactRef = FirebaseDatabase.getInstance().getReference("/users/${chatMessage.contactId}")
+        val contactRef:DatabaseReference
+        if (chatMessage.currentId == FirebaseAuth.getInstance().uid) {
+            contactRef = FirebaseDatabase.getInstance().getReference("/users/${chatMessage.contactId}")
+        }
+        else {
+            contactRef = FirebaseDatabase.getInstance().getReference("/users/${chatMessage.currentId}")
+        }
+
         contactRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
@@ -40,7 +39,7 @@ class LatestMessageItem(val chatMessage: ChatMessage) : Item<ViewHolder>() {
             }
 
         })
-        val lastSenderRef = FirebaseDatabase.getInstance().getReference("/users/$lastSenderId")
+        val lastSenderRef = FirebaseDatabase.getInstance().getReference("/users/${chatMessage.currentId}")
 
         lastSenderRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -53,9 +52,6 @@ class LatestMessageItem(val chatMessage: ChatMessage) : Item<ViewHolder>() {
 
                 viewHolder.itemView.textView_latest_message.text = chatMessage.text
             }
-
         })
-
-
     }
 }
