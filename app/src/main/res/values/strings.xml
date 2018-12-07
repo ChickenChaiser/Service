@@ -17,4 +17,12 @@
     <string name="current_password">Current password</string>
     <string name="userdata_update">User data updated</string>
     <string name="password_change_failed">Wrong password</string>
+
+    <!--FCM-->
+    <string name="default_notification_channel_id" translatable="false">com.example.service.default_notification_channel_id</string>
+    <string name="data_type" translatable="false">data_type</string>
+    <string name="direct_message" translatable="false">direct_message</string>
+    <string name="data_message" translatable="false">message</string>
+    <string name="data_title" translatable="false">title</string>
+    <string name="data_message_id" translatable="false">message_id</string>
 </resources>
