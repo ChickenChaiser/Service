@@ -25,7 +25,6 @@ class LatestMessageItem(val chatMessage: ChatMessage) : Item<ViewHolder>() {
         }
         else {
             contactRef = FirebaseDatabase.getInstance().getReference("/users/${chatMessage.currentId}")
-
         }
 
         contactRef.addListenerForSingleValueEvent(object : ValueEventListener {
