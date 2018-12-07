@@ -37,7 +37,6 @@ class LatestMessageItem(val chatMessage: ChatMessage) : Item<ViewHolder>() {
                 viewHolder.itemView.textView_contact_username.text = contactUser?.userName
                 Picasso.get().load(contactUser?.avatarUrl).into(viewHolder.itemView.useravatar_latestmessage_circleimageView)
             }
-
         })
         val lastSenderRef = FirebaseDatabase.getInstance().getReference("/users/${chatMessage.currentId}")
 
