@@ -47,7 +47,7 @@ class ChatroomsActivity : AppCompatActivity() {
 
         val actionBar = getSupportActionBar()
         actionBar?.setDisplayHomeAsUpEnabled(true)
-        actionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp)
+        actionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
 
         val rv = findViewById<RecyclerView>(R.id.recyclerview_latest_messages)
         rv.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
@@ -101,11 +101,6 @@ class ChatroomsActivity : AppCompatActivity() {
         }
     }
 
-    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.activity_main_drawer,menu)
-        return super.onCreateOptionsMenu(menu)
-    }*/
-
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         var mDrawer = findViewById<View>(R.id.drawerlayout) as FlowingDrawer
         if (mDrawer.drawerState == ElasticDrawer.STATE_CLOSED)
@@ -134,7 +129,6 @@ class ChatroomsActivity : AppCompatActivity() {
     private fun listenForLatestMesages() {
         val currentId = FirebaseAuth.getInstance().uid
         val contactUser = intent.getParcelableExtra<User>(StartNewChatActivity.USER_KEY)
-        //val contactId = contactUser.uid
         val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$currentId").orderByChild("/$contactUser/timestamp")
         ref.addChildEventListener(object : ChildEventListener {
 
