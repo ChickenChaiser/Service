@@ -161,10 +161,10 @@ class ChatroomsActivity : AppCompatActivity() {
         adapter.clear()
         sortedLastMessages.clear()
         latestMessageMap.values.forEach {
-            /*sortedLastMessages.add(it)
+            sortedLastMessages.add(it)
         }
         sortedLastMessages.sortByDescending { it.timestamp.toInt() }
-        sortedLastMessages.forEach {*/
+        sortedLastMessages.forEach {
             adapter.add(LatestMessageItem(it))
         }
     }
