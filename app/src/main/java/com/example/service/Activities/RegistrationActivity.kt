@@ -6,23 +6,14 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.support.annotation.NonNull
-import android.support.v4.app.FragmentActivity
 import android.util.Log
-import android.widget.ImageView
 import android.widget.Toast
 import com.example.service.R
-import com.example.service.R.drawable.camera150
-import com.example.service.R.id.register_username_edittext
 import com.example.service.User
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_registration.*
-import java.net.URL
 import java.util.*
 import com.google.firebase.iid.FirebaseInstanceId
 

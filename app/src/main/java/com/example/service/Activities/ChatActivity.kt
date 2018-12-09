@@ -21,11 +21,16 @@ import kotlinx.android.synthetic.main.activity_chat.*
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import java.util.*
+import android.support.v4.os.HandlerCompat.postDelayed
+import android.view.View
+import com.example.service.R.id.editText_write_message
+import kotlin.collections.ArrayList
 
 
 class ChatActivity : AppCompatActivity() {
 
     val adapter = GroupAdapter<ViewHolder>()
+    var refList = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +46,26 @@ class ChatActivity : AppCompatActivity() {
 
 
         showMessages()
+
+        editText_write_message.setOnFocusChangeListener(object :View.OnFocusChangeListener{
+            override fun onFocusChange(v: View?, hasFocus: Boolean) {
+                recyclerview_chat.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+                    if ( bottom < oldBottom)
+                        recyclerview_chat.scrollToPosition(adapter.itemCount - 1)
+                }
+            }
+
+        })
+
+        /*adapter.setOnItemLongClickListener { item, view ->
+
+            val chatMessageItem = item as SendedMessageItem
+
+            chatMessageItem.deleteMessage()
+            adapter.remove(chatMessageItem)
+
+            return@setOnItemLongClickListener true
+        }*/
 
         button_send_message.setOnClickListener {
             sendMessage()
@@ -71,6 +96,10 @@ class ChatActivity : AppCompatActivity() {
 
         val latestMessageContactRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$contactId/$currentId")
         latestMessageContactRef.setValue(chatMessage, 0 - date.getTime())
+        refList.add(ref.toString())
+        refList.add(contactRef.toString())
+        refList.add(latestMessageRef.toString())
+        refList.add(latestMessageContactRef.toString())
     }
 
     fun showMessages() {
@@ -86,7 +115,7 @@ class ChatActivity : AppCompatActivity() {
                 if (chatMessage != null) {
                     if (chatMessage.currentId == currentId) {
                         val currentUser = ChatroomsActivity.currentUser ?: return
-                        adapter.add(SendedMessageItem(currentUser, chatMessage.text))
+                        adapter.add(SendedMessageItem(currentUser,chatMessage,this@ChatActivity,refList))
                     } else {
                         adapter.add(RecievedMessageItem(contactUser!!, chatMessage.text))
                     }

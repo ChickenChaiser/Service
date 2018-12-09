@@ -2,18 +2,17 @@ package com.example.service.Activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.PopupMenu
 import android.widget.Toast
 import com.example.service.ChatMessage
 import com.example.service.Items.LatestMessageItem
@@ -25,6 +24,7 @@ import com.mxn.soul.flowingdrawer_core.ElasticDrawer
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlin.collections.HashMap
@@ -64,6 +64,12 @@ class ChatroomsActivity : AppCompatActivity() {
 
             intentChatActivity.putExtra(StartNewChatActivity.USER_KEY, row.contactUser)
             startActivity(intentChatActivity)
+
+
+        }
+        adapter.setOnItemLongClickListener { item, view ->
+            showPopup(view,item)
+            return@setOnItemLongClickListener true
         }
 
         fab_new_chat.setOnClickListener {
@@ -77,6 +83,7 @@ class ChatroomsActivity : AppCompatActivity() {
             intentLoginActivity.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intentLoginActivity)
         }
+
 
         //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
         // .setAction("Action", null).show()
@@ -100,6 +107,28 @@ class ChatroomsActivity : AppCompatActivity() {
             val intentSettingsActivity = Intent(this, SettingsActivity::class.java)
             startActivity(intentSettingsActivity)
         }
+    }
+
+    private fun showPopup(view: View,itemRow: Item<ViewHolder>) {
+        var popup: PopupMenu? = null;
+        popup = PopupMenu(this, view)
+        popup.inflate(R.menu.chatrooms_popup_menu)
+
+        popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+
+            when (item!!.itemId) {
+                R.id.header1 -> {
+                    val latestMessageItem = itemRow as LatestMessageItem
+
+                    latestMessageItem.deleteChatroom()
+                    adapter.remove(latestMessageItem)
+                }
+            }
+
+            true
+        })
+
+        popup.show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -1,5 +1,6 @@
 package com.example.service.Items
 
+import android.widget.Toast
 import com.example.service.ChatMessage
 import com.example.service.R
 import com.example.service.User
@@ -52,5 +53,20 @@ class LatestMessageItem(val chatMessage: ChatMessage) : Item<ViewHolder>() {
                 viewHolder.itemView.textView_latest_message.text = chatMessage.text
             }
         })
+
+
+    }
+    fun deleteChatroom(){
+        FirebaseDatabase.getInstance().getReference("/user-messages/${chatMessage.currentId}/${chatMessage.contactId}")
+                .removeValue()
+
+        FirebaseDatabase.getInstance().getReference("/user-messages/${chatMessage.contactId}/${chatMessage.currentId}")
+                .removeValue()
+        FirebaseDatabase.getInstance().getReference("/latest-messages/${chatMessage.currentId}/${chatMessage.contactId}")
+                .removeValue()
+
+        FirebaseDatabase.getInstance().getReference("/latest-messages/${chatMessage.contactId}/${chatMessage.currentId}")
+                .removeValue().addOnSuccessListener {
+                }
     }
 }

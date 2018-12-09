@@ -17,6 +17,7 @@
     <string name="current_password">Current password</string>
     <string name="userdata_update">User data updated</string>
     <string name="password_change_failed">Wrong password</string>
+    <string name="delete_chatroom">Delete chatroom</string>
 
     <!--FCM-->
     <string name="default_notification_channel_id" translatable="false">com.example.service.default_notification_channel_id</string>

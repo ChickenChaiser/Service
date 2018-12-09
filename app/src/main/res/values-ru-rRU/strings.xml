@@ -15,4 +15,5 @@
     <string name="current_password">Текущий пароль</string>
     <string name="userdata_update">Данные пользователя обновлены</string>
     <string name="password_change_failed">Неверный пароль</string>
+    <string name="delete_chatroom">Удалить переписку</string>
 </resources>
