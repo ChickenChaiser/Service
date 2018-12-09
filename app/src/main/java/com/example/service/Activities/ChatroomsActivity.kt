@@ -159,12 +159,12 @@ class ChatroomsActivity : AppCompatActivity() {
 
     private fun refreshLatestMessageRow() {
         adapter.clear()
+        sortedLastMessages.clear()
         latestMessageMap.values.forEach {
-            if (!sortedLastMessages.contains(it))
-                sortedLastMessages.add(it)
+            /*sortedLastMessages.add(it)
         }
         sortedLastMessages.sortByDescending { it.timestamp.toInt() }
-        sortedLastMessages.forEach {
+        sortedLastMessages.forEach {*/
             adapter.add(LatestMessageItem(it))
         }
     }
