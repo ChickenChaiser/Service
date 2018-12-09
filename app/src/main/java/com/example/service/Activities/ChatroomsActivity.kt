@@ -38,6 +38,7 @@ class ChatroomsActivity : AppCompatActivity() {
 
     val adapter = GroupAdapter<ViewHolder>()
     val latestMessageMap = HashMap<String, ChatMessage>()
+    val sortedLastMessages = ArrayList<ChatMessage>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,8 +129,7 @@ class ChatroomsActivity : AppCompatActivity() {
 
     private fun listenForLatestMesages() {
         val currentId = FirebaseAuth.getInstance().uid
-        val contactUser = intent.getParcelableExtra<User>(StartNewChatActivity.USER_KEY)
-        val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$currentId").orderByChild("/$contactUser/timestamp")
+        val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$currentId")
         ref.addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
@@ -160,6 +160,11 @@ class ChatroomsActivity : AppCompatActivity() {
     private fun refreshLatestMessageRow() {
         adapter.clear()
         latestMessageMap.values.forEach {
+            if (!sortedLastMessages.contains(it))
+                sortedLastMessages.add(it)
+        }
+        sortedLastMessages.sortByDescending { it.timestamp.toInt() }
+        sortedLastMessages.forEach {
             adapter.add(LatestMessageItem(it))
         }
     }
